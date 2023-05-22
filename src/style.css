@@ -1,0 +1,62 @@
+:root {
+  --primary-color: #eff6ff;
+  --secondary-color:#172554;
+  --tertiary-color: #2563eb;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+#header {
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+
+
+#projects-container {
+  box-shadow: 8px 0 6px -6px rgba(0, 0, 0, 0.5);
+  height: 100vh;
+}
+
+.navbar-brand, .nav-link {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--tertiary-color) !important;
+}
+
+a.active {
+  color: var(--tertiary-color) !important;
+}
+
+.navbar-toggler {
+  color: white !important;
+}
+
+
+#new-project-button {
+  color: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+#new-project-button:hover {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+button.nav-link {
+  color: var(--tertiary-color) !important;
+}
+
+button.nav-link:hover {
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+button.active {
+  background-color: var(--secondary-color) !important;
+  color: var(--primary-color) !important;
+}
