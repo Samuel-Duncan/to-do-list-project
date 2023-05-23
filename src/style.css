@@ -37,12 +37,12 @@ a.active {
 }
 
 
-#new-project-button {
+#new-project-button, #new-todo-button {
   color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
 
-#new-project-button:hover {
+#new-project-button:hover, #new-todo-button:hover {
   color: var(--primary-color);
   background-color: var(--secondary-color);
 }
