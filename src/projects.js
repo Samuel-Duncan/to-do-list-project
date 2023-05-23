@@ -20,7 +20,7 @@ class Project {
 }
 
 function addProject() {
-  const { name, dueDate } = PROJECT_FORM;
+  const { name, dueDate } = PROJECT_FORM.elements;
   const project = new Project(name.value, dueDate.value);
   projects.push(project);
 }

@@ -37,14 +37,25 @@ a.active {
 }
 
 
-#new-project-button, #new-todo-button {
+#new-project-button, #add-todo-button {
   color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
 
-#new-project-button:hover, #new-todo-button:hover {
+#new-project-button:hover, #add-todo-button:hover {
   color: var(--primary-color);
   background-color: var(--secondary-color);
+}
+
+#edit-button, #delete-button {
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+#edit-button:hover, #delete-button:hover {
+  background-color: var(--tertiary-color);
+  color: var(--secondary-color);
 }
 
 button.nav-link {
@@ -59,4 +70,15 @@ button.nav-link:hover {
 button.active {
   background-color: var(--secondary-color) !important;
   color: var(--primary-color) !important;
+}
+
+.todo-item {
+  border-radius: 1em;
+  padding: 15px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color) !important;
+}
+
+.hide-display {
+  display: none;
 }
