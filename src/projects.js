@@ -1,26 +1,46 @@
 import ToDo from './todos';
-import { PROJECT_FORM, TODO_FORM } from './dom';
 
-const projects = [];
+export default class Project {
+  static projects = [];
 
-class Project {
-  constructor(name, dueDate) {
+  constructor(name) {
     this.name = name;
-    this.dueDate = dueDate;
     this.toDoList = [];
   }
 
-  addToDo() {
+  static addProject(input) {
+    const name = input.value;
+    const project = new Project(name);
+    this.projects.push(project);
+    return project;
+  }
+
+  static deleteProject(projectName) {
+    const projectIndex = this.projects.findIndex((project) => project.name === projectName);
+
+    this.projects.splice(projectIndex, 1);
+  }
+
+  static getProjectByName(projectName) {
+    return this.projects.find((project) => project.name === projectName);
+  }
+
+  addToDo(form) {
     const {
       title, description, dueDate, priority,
-    } = TODO_FORM;
+    } = form.elements;
     const todo = new ToDo(title.value, description.value, dueDate.value, priority.value);
     this.toDoList.push(todo);
+    return todo;
+  }
+
+  deleteToDo(todoIndex) {
+    this.toDoList.splice(todoIndex, 1);
+  }
+
+  getToDoByTitle(todoTitle) {
+    return this.toDoList.find((todo) => todo.title === todoTitle);
   }
 }
 
-function addProject() {
-  const { name, dueDate } = PROJECT_FORM.elements;
-  const project = new Project(name.value, dueDate.value);
-  projects.push(project);
-}
+Project.projects.push(new Project('Default'));

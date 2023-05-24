@@ -5,6 +5,10 @@
 // Deal with storage
 export default class ToDo {
   constructor(title, description, dueDate, priority) {
+    if (!title) {
+      throw new Error('Invalid input. Please provide all required fields.');
+    }
+
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
