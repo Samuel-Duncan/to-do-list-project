@@ -18,15 +18,15 @@ export default class DOM {
 
   static handleProjects() {
     const PROJECT_DISPLAY_AREA = document.querySelector('.projects-container');
-    const NEW_PROJECT_BUTTON = document.getElementById('new-project-button');
+    const PROJECT_NEW_BUTTON = document.getElementById('new-project-button');
     const PROJECT_FORM = document.getElementById('project-form');
     const projectNameInput = document.getElementById('name');
     const PROJECT_SUBMIT_BUTTON = document.getElementById('submit-project');
     const PROJECT_CANCEL_BUTTON = document.getElementById('cancel-project');
-    const PROJECT_DELETE_BUTTON = document.querySelectorAll('#delete-project-button');
     const PROJECT_CONTENT = document.getElementById('v-pills-tabContent');
+    const PROJECT_DEFAULT = document.getElementById('v-pills-default-tab');
 
-    this.resetForms(NEW_PROJECT_BUTTON, PROJECT_FORM);
+    this.resetForms(PROJECT_NEW_BUTTON, PROJECT_FORM);
     this.resetForms(PROJECT_CANCEL_BUTTON, PROJECT_FORM);
 
     function addProjectTab() {
@@ -35,7 +35,6 @@ export default class DOM {
       Project.projects.forEach((project, index) => {
         const projectTab = document.createElement('button');
 
-        // Set button attributes
         projectTab.classList.add('nav-link', 'mb-2');
         projectTab.id = `v-pills-${index}-tab`;
         projectTab.setAttribute('data-bs-toggle', 'pill');
@@ -44,37 +43,52 @@ export default class DOM {
         projectTab.role = 'tab';
         projectTab.setAttribute('aria-controls', `v-pills-${index}`);
         projectTab.setAttribute('aria-selected', 'true');
-
-        // Set button text
         projectTab.textContent = `${project.name}`;
         PROJECT_DISPLAY_AREA.appendChild(projectTab);
 
-        // Create the div element
         const projectContent = document.createElement('div');
 
-        // Set the class, ID, and attributes
         projectContent.classList.add('tab-pane', 'fade');
         projectContent.id = `v-pills-${index}`;
         projectContent.setAttribute('role', 'tabpanel');
         projectContent.setAttribute('aria-labelledby', `v-pills-${index}-tab`);
-        projectContent.innerHTML = `<div class="d-flex justify-content-between">
-        <button id="add-todo-button" class="btn btn-outline-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
-          </svg> Add To Do
-        </button>
-        <button id="delete-project-button" class="btn btn-outline-primary">Delete Project</button>
-      </div>`;
+        if (project.name === 'Default') {
+          projectContent.innerHTML = `<div class="d-flex justify-content-between">
+          <button id="add-todo-button" class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
+            </svg> Add To Do
+          </button>
+          </div>`;
+        } else {
+          projectContent.innerHTML = `<div class="d-flex justify-content-between">
+          <button id="add-todo-button" class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
+            </svg> Add To Do
+          </button>
+          <button id="delete-project-button${index}" class="btn btn-outline-primary delete-project-button">Delete Project</button>
+          </div>`;
+        }
 
         PROJECT_CONTENT.appendChild(projectContent);
 
-        PROJECT_DELETE_BUTTON.forEach((button) => {
-          button.addEventListener('click', () => {
-            projectTab.remove();
+        if (project.name !== 'Default') {
+          const PROJECT_DELETE_BUTTON = document.getElementById(`delete-project-button${index}`);
+          PROJECT_DELETE_BUTTON.addEventListener('click', () => {
             Project.deleteProject(index);
+            addProjectTab();
           });
-        });
+        }
       });
+
+      const lastProjectIndex = Project.projects.length - 1;
+      const lastProjectTab = document.getElementById(`v-pills-${lastProjectIndex}-tab`);
+      const lastProjectContent = document.getElementById(`v-pills-${lastProjectIndex}`);
+
+      lastProjectTab.setAttribute('aria-selected', 'true');
+      lastProjectTab.classList.add('active');
+      lastProjectContent.classList.add('show', 'active');
     }
 
     PROJECT_FORM.addEventListener('submit', (e) => {
