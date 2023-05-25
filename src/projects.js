@@ -10,15 +10,25 @@ export default class Project {
 
   static addProject(input) {
     const name = input.value;
+
+    if (name === '') {
+      alert('Project name cannot be empty.');
+      return;
+    }
+
+    const existingProject = this.projects.find((project) => project.name === name);
+    if (existingProject) {
+      alert('Project with the same name already exists.');
+      return;
+    }
+
     const project = new Project(name);
     this.projects.push(project);
     return project;
   }
 
-  static deleteProject(projectName) {
-    const projectIndex = this.projects.findIndex((project) => project.name === projectName);
-
-    this.projects.splice(projectIndex, 1);
+  static deleteProject(index) {
+    this.projects.splice(index, 1);
   }
 
   static getProjectByName(projectName) {
