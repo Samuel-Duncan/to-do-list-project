@@ -37,13 +37,13 @@ a.active {
 }
 
 
-#new-project-button, #add-todo-button, #submit-project, #cancel-project, 
+#new-project-button, .add-todo-button, #submit-project, #cancel-project, 
 .delete-project-button {
   color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
 
-#new-project-button:hover, #add-todo-button:hover, 
+#new-project-button:hover, .add-todo-button:hover, 
 #submit-project:hover, #cancel-project:hover, .delete-project-button:hover {
   color: var(--primary-color);
   background-color: var(--secondary-color);

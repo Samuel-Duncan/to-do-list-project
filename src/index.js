@@ -1,4 +1,4 @@
 import './style.css';
 import DOM from './dom';
 
-DOM.loadPage();
+document.addEventListener('DOMContentLoaded', DOM.loadPage());

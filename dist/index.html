@@ -43,23 +43,11 @@
         <div class="todo-display-area tab-content d-flex justify-content-center flex-column" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-default" role="tabpanel" aria-labelledby="v-pills-default-tab">
             <div class="d-flex justify-content-between">
-              <button id="add-todo-button" class="btn btn-outline-primary">
+              <button id="add-todo-button" class="btn btn-outline-primary add-todo-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"></path>
                 </svg> Add To Do
               </button>
-            </div>
-            <div class="todo-item mt-3 d-flex flex-sm-column flex-md-row justify-content-between align-items-center flex-wrap">
-              <div class="d-flex flex-row">
-                <div class="title mx-2">Title: </div>
-                <div class="description mx-2">Description: </div>
-              </div>
-              <div class="d-flex flex-row align-items-center">
-                <div class="due-date mx-2">Due date: </div>
-                <div class="priority mx-2">Priority: </div>
-                <button id="edit-button" class="btn btn-outline-primary mx-2">Edit</button>
-                <button id="delete-button" class="btn btn-outline-primary">Delete</button>
-              </div>
             </div>
           </div>
         </div>
@@ -86,8 +74,8 @@
             </select>
           </div>
           <div class="mt-5 text-center">
-            <button type="submit" class="submit btn">Add Task</button>
-            <button type="reset" class="cancel btn mx-2">Cancel</button>
+            <button type="submit" id="submit-todo" class="submit btn">Add Task</button>
+            <button type="reset" id="cancel-todo" class="cancel btn mx-2">Cancel</button>
           </div>
         </form>        
       </div>
