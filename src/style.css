@@ -49,13 +49,13 @@ a.active {
   background-color: var(--secondary-color);
 }
 
-#edit-button, #delete-button {
+.todo-edit-button, .todo-delete-button {
   background-color: var(--primary-color);
   color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
 
-#edit-button:hover, #delete-button:hover {
+.todo-edit-button:hover, .todo-delete-button:hover {
   background-color: var(--tertiary-color);
   color: var(--secondary-color);
 }

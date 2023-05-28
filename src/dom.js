@@ -91,32 +91,40 @@ export default class DOM {
           TODO_FORM.classList.toggle('hide-display');
         });
 
-        project.toDoList.forEach((todo) => {
+        project.toDoList.forEach((todo, todoIndex) => {
           const toDoItem = document.createElement('div');
           toDoItem.classList.add('todo-item', 'mt-3', 'd-flex', 'flex-sm-column', 'flex-md-row', 'justify-content-between', 'align-items-center', 'flex-wrap');
           toDoItem.innerHTML = `<div class="d-flex flex-row">
           <div class="title mx-2">Title: ${todo.title}</div>
           <div class="description mx-2">Description: ${todo.description}</div>
-        </div>
-        <div class="d-flex flex-row align-items-center">
+          </div>
+          <div class="d-flex flex-row align-items-center">
           <div class="due-date mx-2">Due date: ${todo.dueDate}</div>
           <div class="priority mx-2">Priority: ${todo.priority}</div>
-          <button id="edit-button" class="btn btn-outline-primary mx-2">Edit</button>
-          <button id="delete-button" class="btn btn-outline-primary">Delete</button>
-        </div>`;
+          <button id="todo-edit-button${index}-${todoIndex}" class="btn btn-outline-primary todo-edit-button mx-2">Edit</button>
+          <button id="todo-delete-button${index}-${todoIndex}" class="btn btn-outline-primary todo-delete-button">Delete</button>
+          </div>`;
 
           projectContent.appendChild(toDoItem);
+
+          const TODO_DELETE_BUTTON = document.getElementById(`todo-delete-button${index}-${todoIndex}`);
+          TODO_DELETE_BUTTON.addEventListener('click', () => {
+            const projectName = document.querySelector('.projects-container .nav-link.active').textContent;
+            const currentProject = Project.getProjectByName(projectName);
+
+            currentProject.deleteToDo(todoIndex);
+            addProjectTabAndContent();
+
+            const currentProjectIndex = Project.projects.indexOf(currentProject);
+            const currentProjectTab = document.getElementById(`v-pills-${currentProjectIndex}-tab`);
+            const currentProjectContent = document.getElementById(`v-pills-${currentProjectIndex}`);
+
+            currentProjectTab.setAttribute('aria-selected', 'true');
+            currentProjectTab.classList.add('active');
+            currentProjectContent.classList.add('show', 'active');
+          });
         });
       });
-
-      // Set most recently created tab as active
-      const lastProjectIndex = Project.projects.length - 1;
-      const lastProjectTab = document.getElementById(`v-pills-${lastProjectIndex}-tab`);
-      const lastProjectContent = document.getElementById(`v-pills-${lastProjectIndex}`);
-
-      lastProjectTab.setAttribute('aria-selected', 'true');
-      lastProjectTab.classList.add('active');
-      lastProjectContent.classList.add('show', 'active');
     }
 
     PROJECT_FORM.addEventListener('submit', (e) => {
@@ -125,6 +133,14 @@ export default class DOM {
       addProjectTabAndContent();
       PROJECT_FORM.reset();
       PROJECT_FORM.classList.toggle('hide-display');
+      // Set most recently created tab as active
+      const lastProjectIndex = Project.projects.length - 1;
+      const lastProjectTab = document.getElementById(`v-pills-${lastProjectIndex}-tab`);
+      const lastProjectContent = document.getElementById(`v-pills-${lastProjectIndex}`);
+
+      lastProjectTab.setAttribute('aria-selected', 'true');
+      lastProjectTab.classList.add('active');
+      lastProjectContent.classList.add('show', 'active');
     });
 
     const DEFAULT_TODO_ADD_BUTTON = document.getElementById('add-todo-button');
@@ -133,7 +149,6 @@ export default class DOM {
       TODO_FORM.classList.toggle('hide-display');
     });
 
-    // START HERE
     TODO_FORM.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -146,7 +161,13 @@ export default class DOM {
       }
       TODO_FORM.reset();
       TODO_FORM.classList.toggle('hide-display');
-      console.log(project.toDoList);
+      const currentProjectIndex = Project.projects.indexOf(project);
+      const currentProjectTab = document.getElementById(`v-pills-${currentProjectIndex}-tab`);
+      const currentProjectContent = document.getElementById(`v-pills-${currentProjectIndex}`);
+
+      currentProjectTab.setAttribute('aria-selected', 'true');
+      currentProjectTab.classList.add('active');
+      currentProjectContent.classList.add('show', 'active');
     });
   }
 }
