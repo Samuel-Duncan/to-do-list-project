@@ -79,8 +79,37 @@ export default class DOM {
         if (project.name !== 'Default') {
           const PROJECT_DELETE_BUTTON = document.getElementById(`delete-project-button${index}`);
           PROJECT_DELETE_BUTTON.addEventListener('click', () => {
+            const isLastProject = Project.projects.length === 2;
             Project.deleteProject(index);
             addProjectTabAndContent();
+
+            if (isLastProject) {
+              // Remove "active" class from all tabs and contents
+              const allTabs = document.querySelectorAll('.nav-link');
+              const allContents = document.querySelectorAll('.tab-pane');
+
+              allTabs.forEach((tab) => {
+                tab.classList.remove('active');
+              });
+
+              allContents.forEach((content) => {
+                content.classList.remove('active', 'show');
+              });
+
+              // Set active tab to default if it's the last project
+              const defaultTab = document.getElementById('v-pills-0-tab');
+              const defaultContent = document.getElementById('v-pills-0');
+
+              defaultTab.classList.add('active');
+              defaultContent.classList.add('active', 'show');
+            } else {
+              const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
+              const updatedProjectContent = document.getElementById(`v-pills-${index}`);
+
+              updatedProjectTab.setAttribute('aria-selected', 'true');
+              updatedProjectTab.classList.add('active');
+              updatedProjectContent.classList.add('show', 'active');
+            }
           });
         }
 
