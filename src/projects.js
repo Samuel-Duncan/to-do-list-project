@@ -37,9 +37,9 @@ export default class Project {
 
   addToDo(form) {
     const {
-      title, description, dueDate, priority,
+      title, dueDate,
     } = form.elements;
-    const todo = new ToDo(title.value, description.value, dueDate.value, priority.value);
+    const todo = new ToDo(title.value, dueDate.value);
     this.toDoList.push(todo);
     return todo;
   }

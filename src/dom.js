@@ -95,12 +95,10 @@ export default class DOM {
           const toDoItem = document.createElement('div');
           toDoItem.classList.add('todo-item', 'mt-3', 'd-flex', 'flex-sm-column', 'flex-md-row', 'justify-content-between', 'align-items-center', 'flex-wrap');
           toDoItem.innerHTML = `<div class="d-flex flex-row">
-          <div class="title mx-2">Title: ${todo.title}</div>
-          <div class="description mx-2">Description: ${todo.description}</div>
+          <div class="title mx-2">${todo.title}</div>
           </div>
           <div class="d-flex flex-row align-items-center">
-          <div class="due-date mx-2">Due date: ${todo.dueDate}</div>
-          <div class="priority mx-2">Priority: ${todo.priority}</div>
+          <div class="due-date mx-2">${todo.dueDate ? `Due date: ${todo.dueDate}` : ''}</div>
           <button id="todo-edit-button${index}-${todoIndex}" class="btn btn-outline-primary todo-edit-button mx-2">Edit</button>
           <button id="todo-delete-button${index}-${todoIndex}" class="btn btn-outline-primary todo-delete-button">Delete</button>
           </div>`;
@@ -122,6 +120,47 @@ export default class DOM {
             currentProjectTab.setAttribute('aria-selected', 'true');
             currentProjectTab.classList.add('active');
             currentProjectContent.classList.add('show', 'active');
+          });
+
+          const TODO_EDIT_BUTTON = document.getElementById(`todo-edit-button${index}-${todoIndex}`);
+          TODO_EDIT_BUTTON.addEventListener('click', () => {
+            const currentProject = Project.projects[index];
+            const currentTodo = currentProject.toDoList[todoIndex];
+
+            const titleContainer = toDoItem.querySelector('.title');
+            const todoTitleInput = document.createElement('input');
+            todoTitleInput.value = currentTodo.title;
+            todoTitleInput.classList.add('edit-input');
+
+            // Replace the title container with the input element
+            titleContainer.replaceWith(todoTitleInput);
+
+            const saveButton = document.createElement('button');
+            saveButton.id = `todo-save-button${index}-${todoIndex}`;
+            saveButton.classList.add('btn', 'btn-outline-primary', 'todo-save-button', 'mx-2');
+            saveButton.textContent = 'Save';
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('d-flex', 'flex-row', 'align-items-center');
+            buttonContainer.append(saveButton);
+
+            const buttonsContainer = toDoItem.querySelector('.d-flex.flex-row.align-items-center');
+            buttonsContainer.replaceWith(buttonContainer);
+
+            saveButton.addEventListener('click', () => {
+              const newTitle = todoTitleInput.value;
+
+              currentTodo.title = newTitle;
+
+              addProjectTabAndContent();
+
+              const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
+              const updatedProjectContent = document.getElementById(`v-pills-${index}`);
+
+              updatedProjectTab.setAttribute('aria-selected', 'true');
+              updatedProjectTab.classList.add('active');
+              updatedProjectContent.classList.add('show', 'active');
+            });
           });
         });
       });

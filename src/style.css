@@ -49,13 +49,14 @@ a.active {
   background-color: var(--secondary-color);
 }
 
-.todo-edit-button, .todo-delete-button {
+.todo-edit-button, .todo-delete-button, .todo-save-button, .todo-cancel-button {
   background-color: var(--primary-color);
   color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
 
-.todo-edit-button:hover, .todo-delete-button:hover {
+.todo-edit-button:hover, .todo-delete-button:hover,
+.todo-save-button:hover, .todo-cancel-button:hover {
   background-color: var(--tertiary-color);
   color: var(--secondary-color);
 }
