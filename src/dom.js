@@ -1,4 +1,5 @@
 import Project from './projects';
+import Storage from './storage.js';
 
 export default class DOM {
   static loadPage() {
@@ -80,7 +81,7 @@ export default class DOM {
           const PROJECT_DELETE_BUTTON = document.getElementById(`delete-project-button${index}`);
           PROJECT_DELETE_BUTTON.addEventListener('click', () => {
             const isLastProject = Project.projects.length === 2;
-            Project.deleteProject(index);
+            Project.deleteProject(project.name);
             addProjectTabAndContent();
 
             if (isLastProject) {
@@ -139,7 +140,7 @@ export default class DOM {
             const projectName = document.querySelector('.projects-container .nav-link.active').textContent;
             const currentProject = Project.getProjectByName(projectName);
 
-            currentProject.deleteToDo(todoIndex);
+            currentProject.deleteToDo(todo.title);
             addProjectTabAndContent();
 
             const currentProjectIndex = Project.projects.indexOf(currentProject);
