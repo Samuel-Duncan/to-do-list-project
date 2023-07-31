@@ -1,4 +1,5 @@
 import ToDo from './todos';
+import Storage from './storage';
 
 export default class Project {
   static projects = [];
@@ -27,8 +28,9 @@ export default class Project {
     return project;
   }
 
-  static deleteProject(index) {
-    this.projects.splice(index, 1);
+  static deleteProject(name) {
+    this.projects = this.projects.filter((project) => project.name !== name);
+    console.log(this.projects);
   }
 
   static getProjectByName(projectName) {
@@ -44,8 +46,8 @@ export default class Project {
     return todo;
   }
 
-  deleteToDo(todoIndex) {
-    this.toDoList.splice(todoIndex, 1);
+  deleteToDo(toDoTitle) {
+    this.toDoList = this.toDoList.filter((toDo) => toDo.title !== toDoTitle);
   }
 
   getToDoByTitle(todoTitle) {
