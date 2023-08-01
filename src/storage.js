@@ -1,3 +1,6 @@
+import Project from "./projects";
+import ToDo from "./todos";
+
 export default class Storage {
   static save(key, data) {
     const serializedData = JSON.stringify(data);

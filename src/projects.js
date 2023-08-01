@@ -25,12 +25,10 @@ export default class Project {
 
     const project = new Project(name);
     this.projects.push(project);
-    return project;
   }
 
   static deleteProject(name) {
     this.projects = this.projects.filter((project) => project.name !== name);
-    console.log(this.projects);
   }
 
   static getProjectByName(projectName) {
