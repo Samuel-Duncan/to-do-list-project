@@ -99,10 +99,12 @@ export default class DOM {
           defaultTab.classList.add('active');
           defaultContent.classList.add('active', 'show');
         } else {
-          const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
-          const updatedProjectContent = document.getElementById(`v-pills-${index}`);
+          const lastProjectIndex = Project.projects.indexOf(project) + 1;
+          const lastProjectTab = document.getElementById(`v-pills-${lastProjectIndex}-tab`);
+          const lastProjectContent = document.getElementById(`v-pills-${lastProjectIndex}`);
 
-          this.setActiveTab(updatedProjectTab, updatedProjectContent);
+          lastProjectTab.classList.add('active');
+          lastProjectContent.classList.add('active', 'show');
         }
       });
     }
@@ -147,7 +149,7 @@ export default class DOM {
         const currentProjectTab = document.getElementById(`v-pills-${currentProjectIndex}-tab`);
         const currentProjectContent = document.getElementById(`v-pills-${currentProjectIndex}`);
 
-        this.setActiveTab(currentProjectTab, currentProjectContent);
+        DOM.setActiveTab(currentProjectTab, currentProjectContent);
       });
     }
 
@@ -189,7 +191,7 @@ export default class DOM {
           const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
           const updatedProjectContent = document.getElementById(`v-pills-${index}`);
 
-          this.setActiveTab(updatedProjectTab, updatedProjectContent);
+          DOM.setActiveTab(updatedProjectTab, updatedProjectContent);
         });
       });
     }
