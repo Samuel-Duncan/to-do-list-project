@@ -6,7 +6,7 @@ export default class DOM {
     this.handleListeners();
   }
 
-  static resetForms(button, form) {
+  static listenAndResetForms(button, form) {
     button.addEventListener('click', () => {
       form.classList.toggle('hide-display');
       form.reset();
@@ -65,6 +65,12 @@ export default class DOM {
     this.handleProjectDeleteButtons(project, index);
   }
 
+  static setActiveTab(tab, content) {
+    tab.setAttribute('aria-selected', 'true');
+    tab.classList.add('active');
+    content.classList.add('show', 'active');
+  }
+
   static handleProjectDeleteButtons(project, index) {
     if (project.name !== 'Default') {
       const PROJECT_DELETE_BUTTON = document.getElementById(`delete-project-button${index}`);
@@ -96,9 +102,7 @@ export default class DOM {
           const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
           const updatedProjectContent = document.getElementById(`v-pills-${index}`);
 
-          updatedProjectTab.setAttribute('aria-selected', 'true');
-          updatedProjectTab.classList.add('active');
-          updatedProjectContent.classList.add('show', 'active');
+          this.setActiveTab(updatedProjectTab, updatedProjectContent);
         }
       });
     }
@@ -109,10 +113,7 @@ export default class DOM {
     const TODO_FORM = document.getElementById('todo-form');
     const TODO_ADD_BUTTON = document.getElementById(`add-todo-button${index}`);
 
-    TODO_ADD_BUTTON.addEventListener('click', () => {
-      TODO_FORM.reset();
-      TODO_FORM.classList.toggle('hide-display');
-    });
+    this.listenAndResetForms(TODO_ADD_BUTTON, TODO_FORM);
 
     project.toDoList.forEach((todo, todoIndex) => {
       const toDoItem = document.createElement('div');
@@ -146,9 +147,7 @@ export default class DOM {
         const currentProjectTab = document.getElementById(`v-pills-${currentProjectIndex}-tab`);
         const currentProjectContent = document.getElementById(`v-pills-${currentProjectIndex}`);
 
-        currentProjectTab.setAttribute('aria-selected', 'true');
-        currentProjectTab.classList.add('active');
-        currentProjectContent.classList.add('show', 'active');
+        this.setActiveTab(currentProjectTab, currentProjectContent);
       });
     }
 
@@ -190,9 +189,7 @@ export default class DOM {
           const updatedProjectTab = document.getElementById(`v-pills-${index}-tab`);
           const updatedProjectContent = document.getElementById(`v-pills-${index}`);
 
-          updatedProjectTab.setAttribute('aria-selected', 'true');
-          updatedProjectTab.classList.add('active');
-          updatedProjectContent.classList.add('show', 'active');
+          this.setActiveTab(updatedProjectTab, updatedProjectContent);
         });
       });
     }
@@ -200,15 +197,24 @@ export default class DOM {
     handleToDoEditButton();
   }
 
-  static addProjectTabAndContent() {
+  static resetDisplay() {
     const PROJECT_DISPLAY_AREA = document.querySelector('.projects-container');
-    PROJECT_DISPLAY_AREA.innerHTML = '';
     const PROJECT_CONTENT = document.getElementById('v-pills-tabContent');
+    PROJECT_DISPLAY_AREA.innerHTML = '';
     PROJECT_CONTENT.innerHTML = '';
+  }
+
+  static addProjectTabAndContent() {
+    this.resetDisplay();
     Project.projects.forEach((project, index) => {
       this.createProjectTabs(project, index);
       this.createToDos(project, index);
     });
+  }
+
+  static formReset(form) {
+    form.reset();
+    form.classList.toggle('hide-display');
   }
 
   static handleListeners() {
@@ -219,32 +225,26 @@ export default class DOM {
     const TODO_FORM = document.getElementById('todo-form');
     const TODO_CANCEL_BUTTON = document.getElementById('cancel-todo');
 
-    this.resetForms(PROJECT_NEW_BUTTON, PROJECT_FORM);
-    this.resetForms(PROJECT_CANCEL_BUTTON, PROJECT_FORM);
-    this.resetForms(TODO_CANCEL_BUTTON, TODO_FORM);
+    this.listenAndResetForms(PROJECT_NEW_BUTTON, PROJECT_FORM);
+    this.listenAndResetForms(PROJECT_CANCEL_BUTTON, PROJECT_FORM);
+    this.listenAndResetForms(TODO_CANCEL_BUTTON, TODO_FORM);
 
     PROJECT_FORM.addEventListener('submit', (e) => {
       e.preventDefault();
       Project.addProject(projectNameInput);
       DOM.addProjectTabAndContent();
-      PROJECT_FORM.reset();
-      PROJECT_FORM.classList.toggle('hide-display');
+      this.formReset(PROJECT_FORM);
 
       // Set most recently created tab as active
       const lastProjectIndex = Project.projects.length - 1;
       const lastProjectTab = document.getElementById(`v-pills-${lastProjectIndex}-tab`);
       const lastProjectContent = document.getElementById(`v-pills-${lastProjectIndex}`);
 
-      lastProjectTab.setAttribute('aria-selected', 'true');
-      lastProjectTab.classList.add('active');
-      lastProjectContent.classList.add('show', 'active');
+      this.setActiveTab(lastProjectTab, lastProjectContent);
     });
 
     const DEFAULT_TODO_ADD_BUTTON = document.getElementById('add-todo-button');
-    DEFAULT_TODO_ADD_BUTTON.addEventListener('click', () => {
-      TODO_FORM.reset();
-      TODO_FORM.classList.toggle('hide-display');
-    });
+    this.listenAndResetForms(DEFAULT_TODO_ADD_BUTTON, TODO_FORM);
 
     TODO_FORM.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -256,15 +256,12 @@ export default class DOM {
         project.addToDo(TODO_FORM);
         DOM.addProjectTabAndContent();
       }
-      TODO_FORM.reset();
-      TODO_FORM.classList.toggle('hide-display');
+      this.formReset(TODO_FORM);
       const currentProjectIndex = Project.projects.indexOf(project);
       const currentProjectTab = document.getElementById(`v-pills-${currentProjectIndex}-tab`);
       const currentProjectContent = document.getElementById(`v-pills-${currentProjectIndex}`);
 
-      currentProjectTab.setAttribute('aria-selected', 'true');
-      currentProjectTab.classList.add('active');
-      currentProjectContent.classList.add('show', 'active');
+      this.setActiveTab(currentProjectTab, currentProjectContent);
     });
   }
 }
